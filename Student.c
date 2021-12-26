@@ -49,6 +49,12 @@ void sortingIncrease(student arr[]) {
     }
 }
 
+void printInformation(student arr[]) {
+    for(int i = 0; i < 6; i++) {
+        printf("%s\t%s\t%d\t%d\t%d\n", arr[i].id, arr[i].name, arr[i].score1, arr[i].score2, arr[i].score3);
+    }
+}
+
 int main(int argc, char** argv) {
     char func;
 
@@ -94,23 +100,17 @@ int main(int argc, char** argv) {
                 printf("%s\n", "----------");
                 continue;
             case 's':
-                for(int i = 0; i < 6; i++) {
-                    printf("%s\t%s\t%d\t%d\t%d\n", list[i].id, list[i].name, list[i].score1, list[i].score2, list[i].score3);
-                }
+                printInformation(list);
                 printf("%s\n", "----------");
                 continue;
             case 'd':
                 sortingDecline(listHighToLow);                
-                for(int i = 0; i < 6; i++) {
-                    printf("%s\t%s\t%d\t%d\t%d\n", listHighToLow[i].id, listHighToLow[i].name, listHighToLow[i].score1, listHighToLow[i].score2, listHighToLow[i].score3);
-                }
+                printInformation(listHighToLow);
                 printf("%s\n", "----------");
                 continue;
             case 'a':
                 sortingIncrease(listLowToHigh);
-                for(int i = 0; i < 6; i++) {
-                    printf("%s\t%s\t%d\t%d\t%d\n", listLowToHigh[i].id, listLowToHigh[i].name, listLowToHigh[i].score1, listLowToHigh[i].score2, listLowToHigh[i].score3);
-                }
+                printInformation(listLowToHigh);
                 printf("%s\n", "----------");
                 continue;
             case 'b':
