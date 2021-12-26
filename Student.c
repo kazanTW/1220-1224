@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 typedef struct Student {
-    char id[9];
+    char id[10];
     char name[10];
     int score1;
     int score2;
@@ -10,7 +11,7 @@ typedef struct Student {
     float average;
 } student;
 
-student newStudent(char id, char name, int score1, int score2, int score3) {
+student newStudent(char* id, char* name , int score1, int score2, int score3) {
     student s;
     strcpy(s.id, id);
     strcpy(s.name, name);
@@ -20,6 +21,32 @@ student newStudent(char id, char name, int score1, int score2, int score3) {
     s.average = (score1 + score2 + score3) / 3.0;
 
     return s;
+}
+
+void sortingDecline(student arr[]) {
+    student temp;
+    for(int i = 0; i < 5; ++i) {
+        for(int j = 0; j < 5 - i; ++j) {
+            if(arr[j].average < arr[j + 1].average) {
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+void sortingIncrease(student arr[]) {
+    student temp;
+    for(int i = 0; i < 5; ++i) {
+        for(int j = 0; j < 5 - i; ++j) {
+            if(arr[j].average > arr[j + 1].average) {
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
 }
 
 int main(int argc, char** argv) {
@@ -33,6 +60,10 @@ int main(int argc, char** argv) {
     student Allen = newStudent("D11069923", "Allen", 40, 90, 90);
 
     student list[6] = {David, Jack, Kevin, Jannie, Justin, Allen}; 
+    student listHighToLow[6];
+    student listLowToHigh[6];
+    memcpy(listHighToLow, list, sizeof(list));
+    memcpy(listLowToHigh, list, sizeof(list));
 
     printf("%s\n", "===== menu =====");
     printf("%s\n", "f: find specific student data");
@@ -48,60 +79,49 @@ int main(int argc, char** argv) {
         switch(func) {
             case 'f':
                 printf("%s", "Student's ID: ");
-                char id;
-                scanf("%s", &id);
+                const char id_target[10] = {};
+                scanf("%s", id_target);
                 for(int i = 0; i < 6; i++) {
-                    if(strcmp(id, list[i].id) == 0) {
+                    if(strcmp(list[i].id, id_target) == 0) {
                         printf("%s\t%s\t%d\t%d\t%d\n", list[i].id, list[i].name, list[i].score1, list[i].score2, list[i].score3);
                         break;
                     }
                     else {
                         printf("%s\n", "No such student");
-                        continue;
+                        break;
                     }
                 }
+                printf("%s\n", "----------");
+                continue;
             case 's':
                 for(int i = 0; i < 6; i++) {
                     printf("%s\t%s\t%d\t%d\t%d\n", list[i].id, list[i].name, list[i].score1, list[i].score2, list[i].score3);
                 }
                 printf("%s\n", "----------");
-            // case 'd':
-            // student temp;
-            // student listHighToLow[6] = list;
-            //     for(int i = 0; i < 5; ++i) {
-            //         for(int j = 0; j < 5 - i; ++j) {
-            //             if(listHighToLow[j].average > listHighToLow[j].average) {
-            //                 temp = listHighToLow[j];
-            //                 listHighToLow[j] = listHighToLow[j + 1];
-            //                 listHighToLow[j + 1] = temp;
-            //             }
-            //         }
-            //     }
-            //     for(int i = 0; i < 6; i++) {
-            //         printf("%s\t%s\t%d\t%d\t%d\n", listHighToLow[i].id, listHighToLow[i].name, listHighToLow[i].score1, listHighToLow[i].score2, listHighToLow[i].score3);
-            //     }
-            // case 'a':
-            // student temp;
-            // student listLowToHigh[6] = list;
-            //     for(int i = 0; i < 5; ++i) {
-            //         for(int j = 0; j < 5 - i; ++j) {
-            //             if(listHighToLow[j].average < listHighToLow[j].average) {
-            //                 temp = listLowToHigh[j];
-            //                 listLowToHigh[j] = listLowToHigh[j + 1];
-            //                 listLowToHigh[j + 1] = temp;
-            //             }
-            //         }
-            //     }
-            //     for(int i = 0; i < 6; i++) {
-            //         printf("%s\t%s\t%d\t%d\t%d\n", listLowToHigh[i].id, listLowToHigh[i].name, listHighToLow[i].score1, listHighToLow[i].score2, listHighToLow[i].score3);
-            //     }
+                continue;
+            case 'd':
+                sortingDecline(listHighToLow);                
+                for(int i = 0; i < 6; i++) {
+                    printf("%s\t%s\t%d\t%d\t%d\n", listHighToLow[i].id, listHighToLow[i].name, listHighToLow[i].score1, listHighToLow[i].score2, listHighToLow[i].score3);
+                }
+                printf("%s\n", "----------");
+                continue;
+            case 'a':
+                sortingIncrease(listLowToHigh);
+                for(int i = 0; i < 6; i++) {
+                    printf("%s\t%s\t%d\t%d\t%d\n", listLowToHigh[i].id, listLowToHigh[i].name, listLowToHigh[i].score1, listLowToHigh[i].score2, listLowToHigh[i].score3);
+                }
+                printf("%s\n", "----------");
+                continue;
             case 'b':
                 for(int i = 0; i < 6; i++) {
                     printf("%s\t%s\t%2f\n", list[i].id, list[i].name, list[i].average);
-                    printf("%s\n", "--**--**--**--**--");
                 }
+                printf("%s\n", "--**--**--**--**--");
+                continue;
             case 'q':
-                break;
+                printf("%s\n", "Thanks for using. Bye!");
+                exit(EXIT_SUCCESS);
         }
     }
 
