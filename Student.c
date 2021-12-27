@@ -85,8 +85,8 @@ int main(int argc, char** argv) {
         switch(func) {
             case 'f':
                 printf("%s", "Student's ID: ");
-                const char id_target[10] = {};
-                scanf("%s", id_target);
+                char id_target[10] = {};
+                scanf(" %[^\n]", &id_target);
                 for(int i = 0; i < 6; i++) {
                     if(strcmp(list[i].id, id_target) == 0) {
                         printf("%s\t%s\t%d\t%d\t%d\n", list[i].id, list[i].name, list[i].score1, list[i].score2, list[i].score3);
